@@ -64,3 +64,7 @@ idea {
         testSources.from(sourceSets["integrationTest"].allJava.srcDirs)
     }
 }
+
+application {
+    mainClass.set("io.demo.mslibrary.infrastructure.ApplicationKt")
+}
