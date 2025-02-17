@@ -24,5 +24,5 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
-            - name: Tests
-            run: ./gradlew check --stacktrace
+    - name: Tests
+      run: ./gradlew check --stacktrace
