@@ -32,17 +32,17 @@ This is a Kotlin-based microservice for managing a library, built with Spring Bo
 ## Building and Running
 
 To build and run the application, use the following command:
-    ```sh
-    ./gradlew bootRun
-    ```
+```sh
+./gradlew bootRun
+```
 The application will be available at `http://localhost:8080`.
 
 ## Running Tests
 
 To run the tests, use the following command:
-    ```sh
-    ./gradlew test
-    ```
+```sh
+./gradlew test
+```
 
 ## License
 
