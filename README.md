@@ -1,6 +1,6 @@
 # MS Library
 
-This is a Kotlin-based microservice for managing a library, built with Spring Boot and Gradle.
+This is a Kotlin-based microservice for managing a library, built with Spring Boot and Gradle. The project follows the principles of hexagonal architecture to ensure a clean separation of concerns and maintainability.
 
 ## Table of Contents
 
