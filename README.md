@@ -20,7 +20,7 @@ This is a Kotlin-based microservice for managing a library, built with Spring Bo
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/ms-library.git
+    git clone https://github.com/lgimeneza/ms-library.git
     cd ms-library
     ```
 
