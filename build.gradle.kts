@@ -31,7 +31,7 @@ dependencies {
 
     val integrationTestImplementation by configurations.getting
     integrationTestImplementation(project)
-    integrationTestImplementation("io.rest-assured:spring-mock-mvc:5.5.0")
+    integrationTestImplementation("io.rest-assured:spring-mock-mvc:5.5.1")
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
