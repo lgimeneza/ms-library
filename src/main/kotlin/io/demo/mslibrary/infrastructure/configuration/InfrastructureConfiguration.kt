@@ -7,6 +7,5 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class InfrastructureConfiguration {
-    @Bean
-    fun booksRepository(): BooksRepository = InMemoryBooksRepository()
+    @Bean fun booksRepository(): BooksRepository = InMemoryBooksRepository()
 }

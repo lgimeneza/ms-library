@@ -7,6 +7,5 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class ApplicationConfiguration {
-    @Bean
-    fun saveBook(booksRepository: BooksRepository) = SaveBook(booksRepository)
+    @Bean fun saveBook(booksRepository: BooksRepository) = SaveBook(booksRepository)
 }

@@ -9,13 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class PostBookController(
-    private val saveBook: SaveBook
-) {
+class PostBookController(private val saveBook: SaveBook) {
     @PostMapping("/books")
-    fun postBook(
-        @RequestBody postBookRequest: PostBookRequest
-    ): ResponseEntity<Unit> {
+    fun postBook(@RequestBody postBookRequest: PostBookRequest): ResponseEntity<Unit> {
         val saveBookCommand = SaveBookCommand(postBookRequest.title)
         saveBook.execute(saveBookCommand)
         return ResponseEntity.status(CREATED).build()

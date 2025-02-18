@@ -11,8 +11,7 @@ import org.springframework.test.web.servlet.MockMvc
 @SpringBootTest(classes = [Application::class])
 @AutoConfigureMockMvc
 class PostBookFeature {
-    @Autowired
-    private lateinit var mvc: MockMvc
+    @Autowired private lateinit var mvc: MockMvc
 
     @BeforeEach
     fun setUp() {
@@ -21,11 +20,6 @@ class PostBookFeature {
 
     @Test
     fun `should post a book`() {
-        given()
-            .contentType("application/json")
-            .body("{\"title\": \"The Stand\"}")
-            .post("/books")
-            .then()
-            .statusCode(201)
+        given().contentType("application/json").body("{\"title\": \"The Stand\"}").post("/books").then().statusCode(201)
     }
 }
