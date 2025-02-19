@@ -1,0 +1,3 @@
+CREATE TABLE books(
+    title VARCHAR (50) PRIMARY KEY
+)

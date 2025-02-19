@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ms-library
+  datasource:
+    url: "jdbc:postgresql://${postgres.host}:${postgres.port}/${postgres.database}"
+    username: "${postgres.username}"
+    password: "${postgres.password}"
+
+postgres:
+  host: localhost
+  port: 5432
+  database: mslibrary
+  username: mslibrary
+  password: mslibrary
