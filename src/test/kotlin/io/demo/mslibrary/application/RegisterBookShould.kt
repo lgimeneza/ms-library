@@ -8,15 +8,15 @@ import io.demo.mslibrary.domain.BooksRepository
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
-class SaveBookShould {
+class RegisterBookShould {
     @Test
-    fun `should save a book`() {
+    fun `register a book`() {
         val title = "The Stand"
         val booksRepository = mock<BooksRepository>()
-        val saveBook = SaveBook(booksRepository)
-        val saveBookCommand = SaveBookCommand(title)
+        val registerBook = RegisterBook(booksRepository)
+        val registerBookCommand = RegisterBookCommand(title)
 
-        saveBook.execute(saveBookCommand)
+        registerBook.execute(registerBookCommand)
 
         val bookCaptor = argumentCaptor<Book>()
         verify(booksRepository).save(bookCaptor.capture())
