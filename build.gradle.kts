@@ -41,7 +41,7 @@ dependencies {
     integrationTestImplementation(project)
     integrationTestImplementation("io.rest-assured:spring-mock-mvc:5.5.1")
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-    integrationTestImplementation("org.testcontainers:testcontainers:1.20.4")
+    integrationTestImplementation("org.testcontainers:testcontainers:1.20.5")
 }
 
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
