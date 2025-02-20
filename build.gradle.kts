@@ -30,7 +30,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("org.flywaydb:flyway-core:11.1.0")
-    implementation("org.flywaydb:flyway-database-postgresql:11.1.0")
+    implementation("org.flywaydb:flyway-database-postgresql:11.3.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
