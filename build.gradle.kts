@@ -28,9 +28,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
-    implementation("org.postgresql:postgresql:42.7.4")
+    implementation("org.postgresql:postgresql:42.7.5")
     implementation("org.flywaydb:flyway-core:11.3.3")
-    implementation("org.flywaydb:flyway-database-postgresql:11.1.0")
+    implementation("org.flywaydb:flyway-database-postgresql:11.3.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -41,7 +41,7 @@ dependencies {
     integrationTestImplementation(project)
     integrationTestImplementation("io.rest-assured:spring-mock-mvc:5.5.1")
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-    integrationTestImplementation("org.testcontainers:testcontainers:1.20.4")
+    integrationTestImplementation("org.testcontainers:testcontainers:1.20.5")
 }
 
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
