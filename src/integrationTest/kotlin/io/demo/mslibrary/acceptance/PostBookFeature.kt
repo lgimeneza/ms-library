@@ -29,14 +29,23 @@ class PostBookFeature {
     @Test
     fun `should post a book`() {
         val bookTitle = "The Stand"
+        val author = "Stephen King"
+        val category = "FANTASY"
+        val publishedYear = 1978
+        val isbn = "978-0-385-12168-2"
+
         val requestBody =
             """
         {
-            "title": "$bookTitle"
+            "title": "$bookTitle",
+            "author": "$author",
+            "category": "$category",
+            "publishedYear": "$publishedYear",
+            "isbn": "$isbn"
         }
         """
         given().contentType("application/json").body(requestBody).post("/books").then().statusCode(201)
 
-        assertTrue(libraryRepositoryForTest.exists(bookTitle))
+        assertTrue(libraryRepositoryForTest.exists(bookTitle, author, category, publishedYear, isbn))
     }
 }

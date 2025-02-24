@@ -12,7 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 class PostBookController(private val registerBook: RegisterBook) {
     @PostMapping("/books")
     fun postBook(@RequestBody postBookRequest: PostBookRequest): ResponseEntity<Unit> {
-        val registerBookCommand = RegisterBookCommand(postBookRequest.title)
+        val registerBookCommand =
+            RegisterBookCommand(
+                postBookRequest.title,
+                postBookRequest.author,
+                postBookRequest.category,
+                postBookRequest.publishedYear,
+                postBookRequest.isbn)
         registerBook.execute(registerBookCommand)
         return ResponseEntity.status(CREATED).build()
     }
