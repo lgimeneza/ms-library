@@ -6,20 +6,31 @@ import com.nhaarman.mockitokotlin2.verify
 import io.demo.mslibrary.domain.Book
 import io.demo.mslibrary.domain.BooksRepository
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import org.junit.jupiter.api.Test
 
 class RegisterBookShould {
     @Test
     fun `register a book`() {
         val title = "The Stand"
+        val author = "Stephen King"
+        val category = "FANTASY"
+        val publishedYear = 1978
+        val isbn = "978-0-385-12168-2"
+
         val booksRepository = mock<BooksRepository>()
         val registerBook = RegisterBook(booksRepository)
-        val registerBookCommand = RegisterBookCommand(title)
+        val registerBookCommand = RegisterBookCommand(title, author, category, publishedYear, isbn)
 
         registerBook.execute(registerBookCommand)
 
         val bookCaptor = argumentCaptor<Book>()
         verify(booksRepository).save(bookCaptor.capture())
-        assertEquals(title, bookCaptor.firstValue.title)
+        assertNotNull(bookCaptor.firstValue.id)
+        assertEquals(title, bookCaptor.firstValue.title.value)
+        assertEquals(author, bookCaptor.firstValue.author.value)
+        assertEquals(category, bookCaptor.firstValue.category.value)
+        assertEquals(publishedYear, bookCaptor.firstValue.publishedYear.value)
+        assertEquals(isbn, bookCaptor.firstValue.isbn?.value)
     }
 }
