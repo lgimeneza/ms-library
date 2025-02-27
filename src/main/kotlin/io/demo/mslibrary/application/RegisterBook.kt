@@ -2,13 +2,17 @@ package io.demo.mslibrary.application
 
 import io.demo.mslibrary.domain.Author
 import io.demo.mslibrary.domain.Book
+import io.demo.mslibrary.domain.BooksEventsPublisher
 import io.demo.mslibrary.domain.BooksRepository
 import io.demo.mslibrary.domain.Category
 import io.demo.mslibrary.domain.Isbn
 import io.demo.mslibrary.domain.PublishedYear
 import io.demo.mslibrary.domain.Title
 
-class RegisterBook(private val booksRepository: BooksRepository) {
+class RegisterBook(
+    private val booksRepository: BooksRepository,
+    private val booksEventsPublisher: BooksEventsPublisher
+) {
     fun execute(registerBookCommand: RegisterBookCommand) {
         val book =
             Book.create(
@@ -18,5 +22,6 @@ class RegisterBook(private val booksRepository: BooksRepository) {
                 PublishedYear(registerBookCommand.publishedYear),
                 registerBookCommand.isbn?.let { Isbn(it) })
         booksRepository.save(book)
+        booksEventsPublisher.publish(book.events)
     }
 }
