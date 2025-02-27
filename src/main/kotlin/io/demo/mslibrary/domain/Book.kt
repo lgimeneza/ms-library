@@ -8,6 +8,8 @@ data class Book(
     val publishedYear: PublishedYear,
     val isbn: Isbn?
 ) {
+    val events = mutableListOf<DomainEvent>()
+
     companion object {
         fun create(
             title: Title,
@@ -16,7 +18,9 @@ data class Book(
             publishedYear: PublishedYear,
             isbn: Isbn? = null
         ): Book {
-            return Book(BookId.generate(), title, author, category, publishedYear, isbn)
+            val book = Book(BookId.generate(), title, author, category, publishedYear, isbn)
+            book.events.add(BookRegisteredEvent(book))
+            return book
         }
     }
 }

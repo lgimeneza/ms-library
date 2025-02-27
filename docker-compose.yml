@@ -9,3 +9,43 @@ services:
       POSTGRES_USER: mslibrary
       POSTGRES_PASSWORD: mslibrary
       POSTGRES_DB: mslibrary
+
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.1
+    expose:
+      - "2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.1
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    expose:
+      - "29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: false
+  init-kafka:
+    image: confluentinc/cp-kafka:7.3.1
+    depends_on:
+      - kafka
+    entrypoint: [ '/bin/sh', '-c' ]
+    command: |
+      "
+      # blocks until kafka is reachable
+      kafka-topics --bootstrap-server kafka:29092 --list
+      
+      # creating topics
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic pub.library.books --replication-factor 1 --partitions 1
+      echo -e 'Successfully created the following topics:'
+      kafka-topics --bootstrap-server kafka:29092 --list
+      "
