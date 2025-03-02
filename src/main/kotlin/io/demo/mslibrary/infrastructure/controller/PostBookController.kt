@@ -2,7 +2,7 @@ package io.demo.mslibrary.infrastructure.controller
 
 import io.demo.mslibrary.application.RegisterBook
 import io.demo.mslibrary.application.RegisterBookCommand
-import org.springframework.http.HttpStatus.CREATED
+import java.net.HttpURLConnection.HTTP_CREATED
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,6 +20,6 @@ class PostBookController(private val registerBook: RegisterBook) {
                 postBookRequest.publishedYear,
                 postBookRequest.isbn)
         registerBook.execute(registerBookCommand)
-        return ResponseEntity.status(CREATED).build()
+        return ResponseEntity.status(HTTP_CREATED).build()
     }
 }

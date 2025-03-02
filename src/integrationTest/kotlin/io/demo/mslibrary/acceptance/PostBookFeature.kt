@@ -2,6 +2,7 @@ package io.demo.mslibrary.acceptance
 
 import io.demo.mslibrary.infrastructure.repositories.LibraryRepositoryForTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
+import java.net.HttpURLConnection.HTTP_CREATED
 import java.util.UUID
 import org.assertj.core.api.Assertions.assertThat
 import org.awaitility.Awaitility.await
@@ -34,7 +35,7 @@ class PostBookFeature : IntegrationTestBase() {
             "isbn": "$isbn"
         }
         """
-        given().contentType("application/json").body(requestBody).post("/books").then().statusCode(201)
+        given().contentType("application/json").body(requestBody).post("/books").then().statusCode(HTTP_CREATED)
 
         assertTrue(libraryRepositoryForTest.exists(bookTitle, author, category, publishedYear, isbn))
 
