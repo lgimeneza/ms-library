@@ -8,7 +8,10 @@ import io.demo.mslibrary.domain.Category
 import io.demo.mslibrary.domain.Isbn
 import io.demo.mslibrary.domain.PublishedYear
 import io.demo.mslibrary.domain.Title
+import java.sql.ResultSet
 import java.util.UUID
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
@@ -31,7 +34,7 @@ class PostgreSqlBooksRepository(private val jdbcTemplate: NamedParameterJdbcTemp
         jdbcTemplate.update(query, namedParameters)
     }
 
-    override fun find(id: BookId): Book {
+    override fun find(id: BookId): Book? {
         val query =
             """
             SELECT id, title, author, category, published_year, isbn
@@ -42,14 +45,29 @@ class PostgreSqlBooksRepository(private val jdbcTemplate: NamedParameterJdbcTemp
         val namedParameters = MapSqlParameterSource()
         namedParameters.addValue("id", id.value)
 
-        return jdbcTemplate.queryForObject(query, namedParameters) { rs, _ ->
+        return try {
+            jdbcTemplate.queryForObject(query, namedParameters, mapResultSetToBook()) as Book
+        } catch (exception: EmptyResultDataAccessException) {
+            null
+        }
+    }
+
+    private fun mapResultSetToBook(): RowMapper<Book> {
+        return RowMapper { rs: ResultSet, _: Int ->
+            val id = rs.getString("id")
+            val title = rs.getString("title")
+            val author = rs.getString("author")
+            val category = rs.getString("category")
+            val publishedYear = rs.getInt("published_year")
+            val isbn = rs.getString("isbn")
+
             Book(
-                BookId(UUID.fromString(rs.getString("id"))),
-                Title(rs.getString("title")),
-                Author(rs.getString("author")),
-                Category(rs.getString("category")),
-                PublishedYear(rs.getInt("published_year")),
-                rs.getString("isbn")?.let { Isbn(it) })
-        }!!
+                BookId(UUID.fromString(id)),
+                Title(title),
+                Author(author),
+                Category(category),
+                PublishedYear(publishedYear),
+                isbn?.let { Isbn(it) })
+        }
     }
 }

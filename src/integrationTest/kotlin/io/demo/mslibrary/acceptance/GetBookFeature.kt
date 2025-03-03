@@ -2,6 +2,7 @@ package io.demo.mslibrary.acceptance
 
 import io.demo.mslibrary.infrastructure.repositories.LibraryRepositoryForTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import java.net.HttpURLConnection.HTTP_OK
 import java.util.UUID
 import org.junit.jupiter.api.Test
@@ -36,5 +37,12 @@ class GetBookFeature : IntegrationTestBase() {
                 }
                 """)
         }
+    }
+
+    @Test
+    fun `should return 404 when book does not exist`() {
+        val nonExistentBookId = UUID.randomUUID()
+
+        given().get("/books/{id}", nonExistentBookId).then().statusCode(HTTP_NOT_FOUND)
     }
 }

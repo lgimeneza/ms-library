@@ -14,6 +14,7 @@ class GetBookController(private val findBook: FindBook) {
     fun getBook(@PathVariable id: String): ResponseEntity<GetBookResponse> {
         val findBookQuery = FindBookQuery(id)
         val bookDto = findBook.execute(findBookQuery)
-        return ResponseEntity.status(HTTP_OK).body(bookDto.toGetBookResponse())
+        return bookDto?.let { ResponseEntity.status(HTTP_OK).body(bookDto.toGetBookResponse()) }
+            ?: ResponseEntity.notFound().build()
     }
 }
