@@ -3,7 +3,7 @@ plugins {
     application
     kotlin("jvm") version "2.1.10"
     kotlin("plugin.spring") version "2.1.10"
-    id("org.springframework.boot") version "3.4.3"
+    id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.ncorti.ktfmt.gradle") version "0.22.0"
 }
