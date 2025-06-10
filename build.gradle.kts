@@ -43,7 +43,7 @@ dependencies {
     integrationTestImplementation(project)
     integrationTestImplementation("io.rest-assured:spring-mock-mvc:5.5.1")
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-    integrationTestImplementation("org.testcontainers:testcontainers:1.20.6")
+    integrationTestImplementation("org.testcontainers:testcontainers:1.21.1")
     integrationTestImplementation("org.apache.kafka:kafka-clients:3.9.0")
     integrationTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.1.0")
 }
