@@ -32,7 +32,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:11.9.1")
     implementation("org.flywaydb:flyway-database-postgresql:11.8.2")
 
-    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka:4.2.1")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka:4.3.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
