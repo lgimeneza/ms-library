@@ -8,6 +8,7 @@ import io.demo.mslibrary.domain.Category
 import io.demo.mslibrary.domain.Isbn
 import io.demo.mslibrary.domain.PublishedYear
 import io.demo.mslibrary.domain.Title
+import io.demo.mslibrary.domain.exceptions.BookNotFoundException
 import java.sql.ResultSet
 import java.util.UUID
 import org.springframework.dao.EmptyResultDataAccessException
@@ -34,7 +35,7 @@ class PostgreSqlBooksRepository(private val jdbcTemplate: NamedParameterJdbcTemp
         jdbcTemplate.update(query, namedParameters)
     }
 
-    override fun find(id: BookId): Book? {
+    override fun find(id: BookId): Book {
         val query =
             """
             SELECT id, title, author, category, published_year, isbn
@@ -48,8 +49,31 @@ class PostgreSqlBooksRepository(private val jdbcTemplate: NamedParameterJdbcTemp
         return try {
             jdbcTemplate.queryForObject(query, namedParameters, mapResultSetToBook()) as Book
         } catch (exception: EmptyResultDataAccessException) {
-            null
+            throw BookNotFoundException("Book with id ${id.value} not found")
         }
+    }
+
+    override fun findAll(): List<Book> {
+        val query =
+            """
+            SELECT id, title, author, category, published_year, isbn
+            FROM books
+        """
+
+        return jdbcTemplate.query(query, mapResultSetToBook())
+    }
+
+    override fun delete(id: BookId) {
+        val query =
+            """
+            DELETE FROM books
+            WHERE id = :id
+        """
+
+        val namedParameters = MapSqlParameterSource()
+        namedParameters.addValue("id", id.value)
+
+        jdbcTemplate.update(query, namedParameters)
     }
 
     private fun mapResultSetToBook(): RowMapper<Book> {

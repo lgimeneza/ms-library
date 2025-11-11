@@ -42,4 +42,17 @@ class LibraryRepositoryForTest(private val jdbcTemplate: NamedParameterJdbcTempl
 
         jdbcTemplate.update(query, namedParameters)
     }
+
+    fun existsById(id: UUID): Boolean {
+        val query =
+            """
+            SELECT COUNT(*) 
+            FROM books 
+            WHERE id = :id
+            """
+        val namedParameters = MapSqlParameterSource()
+        namedParameters.addValue("id", id)
+
+        return jdbcTemplate.queryForObject(query, namedParameters, Int::class.java)!! > 0
+    }
 }

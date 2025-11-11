@@ -2,6 +2,7 @@ package io.demo.mslibrary.application
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.mock
 import io.demo.mslibrary.domain.Author
 import io.demo.mslibrary.domain.Book
@@ -11,10 +12,11 @@ import io.demo.mslibrary.domain.Category
 import io.demo.mslibrary.domain.Isbn
 import io.demo.mslibrary.domain.PublishedYear
 import io.demo.mslibrary.domain.Title
+import io.demo.mslibrary.domain.exceptions.BookNotFoundException
 import java.util.UUID
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class FindBookShould {
     @Test
@@ -48,14 +50,12 @@ class FindBookShould {
     }
 
     @Test
-    fun `return null if the book does not exist`() {
-        val booksRepository = mock<BooksRepository>() { on { find(any()) } doReturn null }
+    fun `throw exception if the book does not exist`() {
+        val booksRepository = mock<BooksRepository>() { on { find(any()) } doThrow BookNotFoundException("not found") }
 
         val findBookQuery = FindBookQuery(UUID.randomUUID().toString())
         val findBook = FindBook(booksRepository)
 
-        val actualBook = findBook.execute(findBookQuery)
-
-        assertNull(actualBook)
+        assertThrows<BookNotFoundException> { findBook.execute(findBookQuery) }
     }
 }
