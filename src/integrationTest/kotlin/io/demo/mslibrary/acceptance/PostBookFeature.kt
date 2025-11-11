@@ -18,13 +18,11 @@ class PostBookFeature : IntegrationTestBase() {
     @Test
     fun `should post a book`() {
         kafkaConsumerForTest.consumeFrom("pub.library.books")
-
         val bookTitle = "The Stand"
         val author = "Stephen King"
         val category = "FANTASY"
         val publishedYear = 1978
-        val isbn = "978-0-385-12168-2"
-
+        val isbn = "978-0-385-12168-" + (1000..9999).random()
         val requestBody =
             """
         {

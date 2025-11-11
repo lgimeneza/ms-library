@@ -3,17 +3,17 @@ package io.demo.mslibrary.acceptance
 import io.demo.mslibrary.infrastructure.repositories.LibraryRepositoryForTest
 import io.restassured.module.mockmvc.RestAssuredMockMvc.given
 import java.net.HttpURLConnection.HTTP_NOT_FOUND
-import java.net.HttpURLConnection.HTTP_OK
+import java.net.HttpURLConnection.HTTP_NO_CONTENT
 import java.util.UUID
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.client.match.MockRestRequestMatchers.content
 
-class GetBookFeature : IntegrationTestBase() {
+class DeleteBookFeature : IntegrationTestBase() {
     @Autowired lateinit var libraryRepositoryForTest: LibraryRepositoryForTest
 
     @Test
-    fun `should get a book`() {
+    fun `should delete a book`() {
         val bookId = UUID.randomUUID()
         val title = "It"
         val author = "Stephen King"
@@ -22,26 +22,15 @@ class GetBookFeature : IntegrationTestBase() {
         val isbn = "978-0-670-81302-" + (1000..9999).random()
         libraryRepositoryForTest.createBook(bookId, title, author, category, publishedYear, isbn)
 
-        given().get("/books/{id}", bookId).then().statusCode(HTTP_OK).contentType("application/json").assertThat {
-            content()
-                .json(
-                    """
-                {
-                    "id": "$bookId",
-                    "title": "$title",
-                    "author": "$author",
-                    "category": "$category",
-                    "publishedYear": $publishedYear,
-                    "isbn": "$isbn"
-                }
-                """)
-        }
+        given().delete("/books/{id}", bookId).then().statusCode(HTTP_NO_CONTENT)
+
+        assertFalse(libraryRepositoryForTest.existsById(bookId))
     }
 
     @Test
     fun `should return 404 when book does not exist`() {
         val nonExistentBookId = UUID.randomUUID()
 
-        given().get("/books/{id}", nonExistentBookId).then().statusCode(HTTP_NOT_FOUND)
+        given().delete("/books/{id}", nonExistentBookId).then().statusCode(HTTP_NOT_FOUND)
     }
 }
