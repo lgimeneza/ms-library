@@ -48,7 +48,7 @@ dependencies {
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
     integrationTestImplementation("org.testcontainers:testcontainers:1.20.6")
     integrationTestImplementation("org.apache.kafka:kafka-clients:3.9.0")
-    integrationTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:4.1.1")
+    integrationTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:5.0.0")
 }
 
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
